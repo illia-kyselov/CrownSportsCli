@@ -5,6 +5,7 @@ import {
     Text,
     StyleSheet,
     Image,
+    ScrollView,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -62,33 +63,38 @@ export default function QuizSuccessScreen() {
     return (
         <View style={styles.root}>
             <SafeAreaView style={styles.safeArea}>
-                <BackButton style={styles.backBtn} onPress={handleBackPress} />
-                <View style={styles.spacer56} />
+                <ScrollView
+                    contentContainerStyle={styles.scrollContainer}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <BackButton style={styles.backBtn} onPress={handleBackPress} />
+                    <View style={styles.spacer56} />
 
-                <View style={styles.content}>
-                    <Text style={styles.mainTitle}>You done new level!</Text>
-                    <Text style={styles.subTitle}>
-                        Take your reward! And take the crown of the king of endurance
-                    </Text>
-                </View>
+                    <View style={styles.content}>
+                        <Text style={styles.mainTitle}>You done new level!</Text>
+                        <Text style={styles.subTitle}>
+                            Take your reward! And take the crown of the king of endurance
+                        </Text>
+                    </View>
 
-                <View style={styles.rewardBlock}>
-                    <LinearGradient
-                        colors={['#E1C285', '#9F7E3D']}
-                        start={{ x: 1, y: 0.5 }}
-                        end={{ x: 0, y: 0.5 }}
-                        style={styles.rewardBlockInner}
-                    >
-                        <Text style={styles.rewardText}>+ {formatReward(rewardValue)}</Text>
-                        <CrownSVG />
-                    </LinearGradient>
-                </View>
+                    <View style={styles.rewardBlock}>
+                        <LinearGradient
+                            colors={['#E1C285', '#9F7E3D']}
+                            start={{ x: 1, y: 0.5 }}
+                            end={{ x: 0, y: 0.5 }}
+                            style={styles.rewardBlockInner}
+                        >
+                            <Text style={styles.rewardText}>+ {formatReward(rewardValue)}</Text>
+                            <CrownSVG />
+                        </LinearGradient>
+                    </View>
 
-                <Image source={BigCrown} style={styles.bigCrown} resizeMode="contain" />
+                    <Image source={BigCrown} style={styles.bigCrown} resizeMode="contain" />
 
-                <View style={styles.buttonContainer}>
-                    <BigButton title="Close" onPress={handleClosePress} />
-                </View>
+                    <View style={styles.buttonContainer}>
+                        <BigButton title="Close" onPress={handleClosePress} />
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         </View>
     );
@@ -103,8 +109,14 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 16,
     },
+    scrollContainer: {
+        flexGrow: 1,
+    },
     backBtn: {
         marginTop: 12,
+    },
+    spacer56: {
+        marginBottom: 26,
     },
     content: {
         alignSelf: 'center',
@@ -150,15 +162,6 @@ const styles = StyleSheet.create({
     bigCrown: {
         width: 332,
         height: 332,
-        marginBottom: 22,
         alignSelf: 'center',
-    },
-    buttonContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        marginBottom: 32,
-    },
-    spacer56: {
-        marginBottom: 56,
     },
 });

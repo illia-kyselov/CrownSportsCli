@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     coverBlock: {
         height: 200,
         borderRadius: 6,
-        marginBottom: 88,
+        marginBottom: 22,
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: '#000000',

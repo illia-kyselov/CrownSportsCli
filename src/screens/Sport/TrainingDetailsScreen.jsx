@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     },
     buttonWrapper: {
         flex: 1,
+        paddingBottom: 40,
     },
     buttonMarginRight: {
         marginRight: 8,

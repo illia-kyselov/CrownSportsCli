@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, Image } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -32,16 +32,20 @@ export default function QuizQuestionScreen() {
     const progressRatio = (questionIndex + 1) / totalQuestions;
 
     const handleAnswerPress = (answer) => {
-        if (selectedAnswer !== null) { return; }
+        if (selectedAnswer !== null) {
+            return;
+        }
         setSelectedAnswer(answer);
 
         setTimeout(() => {
             if (answer.isCorrect) {
-                dispatch(setQuizProgress({
-                    level,
-                    currentQuestionIndex: questionIndex + 1,
-                    completed: questionIndex + 1 === totalQuestions,
-                }));
+                dispatch(
+                    setQuizProgress({
+                        level,
+                        currentQuestionIndex: questionIndex + 1,
+                        completed: questionIndex + 1 === totalQuestions,
+                    })
+                );
                 if (questionIndex + 1 < totalQuestions) {
                     navigation.replace('QuizQuestion', {
                         level,
@@ -58,16 +62,26 @@ export default function QuizQuestionScreen() {
 
     return (
         <SafeAreaView style={[styles.safeArea, styles.backgroundSafeArea]}>
-            <View style={styles.container}>
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
                 <BackButton style={styles.backButton} />
-
                 <View style={styles.progressContainer}>
                     <View style={styles.progressBackground}>
-                        <View style={[styles.progressFill, { width: `${Math.round(progressRatio * 100)}%` }]} />
+                        <View
+                            style={[
+                                styles.progressFill,
+                                { width: `${Math.round(progressRatio * 100)}%` },
+                            ]}
+                        />
                     </View>
                     <Image
                         source={crownMini}
-                        style={[styles.crownMini, { left: `${Math.round(progressRatio * 100)}%` }]}
+                        style={[
+                            styles.crownMini,
+                            { left: `${Math.round(progressRatio * 100)}%` },
+                        ]}
                     />
                 </View>
 
@@ -91,7 +105,7 @@ export default function QuizQuestionScreen() {
                         </View>
                     );
                 })}
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -106,12 +120,12 @@ const styles = StyleSheet.create({
     noQuestionText: {
         color: '#fff',
     },
-    container: {
-        flex: 1,
+    scrollContainer: {
+        flexGrow: 1,
         paddingHorizontal: 16,
+        paddingTop: 14,
     },
     backButton: {
-        marginTop: 14,
         marginBottom: 22,
     },
     progressContainer: {

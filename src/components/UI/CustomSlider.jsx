@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     valueLabel: {
         position: 'absolute',
         top: '50%',
-        transform: [{ translateY: 22 }],
+        transform: [{ translateY: 14 }],
     },
     valueLabelMarginLeft: {
         marginLeft: -10,

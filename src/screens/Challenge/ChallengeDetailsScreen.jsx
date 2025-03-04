@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -65,27 +65,31 @@ export default function ChallengeDetailsScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <BackButton />
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                <Image source={imageSource} style={styles.challengeImage} />
 
-            <Image source={imageSource} style={styles.challengeImage} />
+                <Text style={styles.title}>{challenge.title}</Text>
+                <Text style={styles.description}>{challenge.description}</Text>
 
-            <Text style={styles.title}>{challenge.title}</Text>
-            <Text style={styles.description}>{challenge.description}</Text>
+                <View style={styles.goalBlock}>
+                    <Text style={styles.goalHeader}>Goal</Text>
+                    <Text style={styles.goalText}>{challenge.goal}</Text>
+                </View>
 
-            <View style={styles.goalBlock}>
-                <Text style={styles.goalHeader}>Goal</Text>
-                <Text style={styles.goalText}>{challenge.goal}</Text>
-            </View>
+                <BigButton
+                    title="Done"
+                    onPress={handleDone}
+                    containerStyle={styles.bigButtonContainerNoMargin}
+                />
 
-            <BigButton
-                title="Done"
-                onPress={handleDone}
-                containerStyle={styles.bigButtonContainerNoMargin}
-            />
-
-            <CannotExecuteButton
-                title="Cannot execute"
-                onPress={handleDelete}
-            />
+                <CannotExecuteButton
+                    title="Cannot execute"
+                    onPress={handleDelete}
+                />
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -95,6 +99,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#677990',
         padding: 16,
+    },
+    scrollContainer: {
+        flexGrow: 1,
     },
     challengeImage: {
         width: '100%',

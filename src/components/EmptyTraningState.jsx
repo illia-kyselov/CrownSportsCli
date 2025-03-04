@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BigButton from './UI/BigButton';
 import { selectSelectedDate } from '../store/slices/trainingSlice';
 
@@ -16,13 +17,17 @@ const formatDate = (date) => {
 };
 
 const EmptyTraningState = ({ onAddPress }) => {
+    const insets = useSafeAreaInsets();
     const selectedDate = useSelector(selectSelectedDate);
-    const displayDate = selectedDate
-        ? formatDate(selectedDate)
-        : formatDate(new Date());
+    const displayDate = selectedDate ? formatDate(selectedDate) : formatDate(new Date());
 
     return (
-        <View style={styles.emptyContainer}>
+        <ScrollView
+            contentContainerStyle={[
+                styles.emptyContainer,
+                { paddingBottom: insets.bottom },
+            ]}
+        >
             <Text style={[styles.dateText, styles.alignSelfFlexStart]}>{displayDate}</Text>
             <View style={styles.marginBottom56} />
             <Image
@@ -35,13 +40,13 @@ const EmptyTraningState = ({ onAddPress }) => {
             <View style={styles.buttonWrapper}>
                 <BigButton title="Add" onPress={onAddPress} />
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     emptyContainer: {
-        flex: 1,
+        flexGrow: 1,
         alignItems: 'center',
     },
     dateText: {
